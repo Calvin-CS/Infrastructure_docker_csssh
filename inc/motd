@@ -1,0 +1,10 @@
+#!/bin/sh
+echo "------------------------------------------------------------------"
+echo "cs-ssh is a private system for Calvin University CS and DS students,"
+echo "faculty, and staff.  It may be used as a jumping point to other "
+echo "CS resources, and to have access to your Linux home directory. "
+echo "\n"
+echo "Please refrain from running resource intensive applications on"
+echo "this server.  Thank you! \n"
+echo " -Chris Wieringa (Lab Manager) cwieri39@calvin.edu"
+echo "------------------------------------------------------------------\n"
