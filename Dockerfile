@@ -3,7 +3,7 @@ LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
 ARG S6_OVERLAY_VERSION=3.1.1.2
-ARG BUILDDATE=20220805-01
+ARG BUILDDATE=20220808-01
 
 # Do all run commands with bash
 SHELL ["/bin/bash", "-c"] 
@@ -21,7 +21,9 @@ RUN apt update -y && \
     libnss-myhostname \
     libnss-mymachines \
     libnss-ldap \
+    libuser \
     locales \
+    nfs-common \
     krb5-user \
     sssd-krb5 \
     unburden-home-dir && \
@@ -32,13 +34,14 @@ ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/unburden-home-dir.conf /etc/unburden-home-dir
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/unburden-home-dir.list /etc/unburden-home-dir.list
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/unburden-home-dir /etc/default/unburden-home-dir
-RUN chmod 0755 /etc/profile.d/unburden.sh
-RUN chmod 0644 /etc/unburden-home-dir
-RUN chmod 0644 /etc/unburden-home-dir.list
-RUN chmod 0644 /etc/default/unburden-home-dir
+RUN chmod 0755 /etc/profile.d/unburden.sh && \
+    chmod 0644 /etc/unburden-home-dir && \
+    chmod 0644 /etc/unburden-home-dir.list && \
+    chmod 0644 /etc/default/unburden-home-dir
 
 # add CalvinAD trusted root certificate
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/CalvinCollege-ad-CA.crt /etc/ssl/certs
+RUN chmod 0644 /etc/ssl/certs/CalvinCollege-ad-CA.crt
 RUN ln -s -f /etc/ssl/certs/CalvinCollege-ad-CA.crt /etc/ssl/certs/ddbc78f4.0
 
 # Drop all inc/ configuration files
@@ -47,12 +50,17 @@ ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/nsswitch.conf /etc
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/sssd.conf /etc/sssd
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/idmapd.conf /etc
-RUN chmod 0600 /etc/sssd/sssd.conf
+RUN chmod 0600 /etc/sssd/sssd.conf && \
+    chmod 0644 /etc/krb5.conf && \
+    chmod 0644 /etc/nsswitch.conf && \
+    chmod 0644 /etc/idmapd.conf
 RUN chown root:root /etc/sssd/sssd.conf
 
 # pam configs
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/common-auth /etc/pam.d
 ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/auth/common-session /etc/pam.d
+RUN chmod 0644 /etc/pam.d/common-auth && \
+    chmod 0644 /etc/pam.d/common-session
 
 # use the secrets to edit sssd.conf appropriately
 RUN --mount=type=secret,id=LDAP_BIND_USER \
@@ -88,7 +96,7 @@ RUN echo "ldap_access_filter = memberOf=CN=CS-Rights-Lab-All,OU=Groups,OU=Calvin
 
 # Setup of openSSH
 RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y openssh-server update-motd
+    DEBIAN_FRONTEND=noninteractive apt install -y openssh-server openssh-client update-motd vim-tiny nano-tiny xauth
 
 # OpenSSH keys via secrets
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_ECDSA_KEY \
