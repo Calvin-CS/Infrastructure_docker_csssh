@@ -131,6 +131,10 @@ RUN mkdir -p /run/sshd && \
     chown root:root /run/sshd && \
     chmod 0755 /run/sshd
 
+# Mount points
+RUN mkdir -p /home /webroot /opt/R /rprojects /opt/python /opt/anaconda && \
+    chown 0755 /home /webroot /opt/R /rprojects /opt/python /opt/anaconda
+
 # MOTD update
 COPY inc/motd /etc/update-motd.d/05-cs-info
 RUN rm -f /etc/update-motd.d/50-motd-news /etc/update-motd.d/60-unminimize && \
