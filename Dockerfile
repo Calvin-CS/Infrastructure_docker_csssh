@@ -3,12 +3,17 @@ LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
 ARG S6_OVERLAY_VERSION=3.1.1.2
-ARG BUILDDATE=20220808-01
+ARG BUILDDATE=20220808-02
 
 # Do all run commands with bash
 SHELL ["/bin/bash", "-c"] 
 
-# Start with base Ubuntu, add a few system packages
+# Start with base Ubuntu
+# Set timezone
+RUN ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && \
+    echo "$TZ" > /etc/timezone
+
+# add a few system packages for SSSD/authentication
 RUN apt update -y && \
     DEBIAN_FRONTEND=noninteractive apt install -y \
     sssd \
