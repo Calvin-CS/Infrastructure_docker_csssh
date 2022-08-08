@@ -101,7 +101,13 @@ RUN echo "ldap_access_filter = memberOf=CN=CS-Rights-Lab-All,OU=Groups,OU=Calvin
 
 # Setup of openSSH
 RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y openssh-server openssh-client update-motd vim-tiny nano-tiny xauth
+    DEBIAN_FRONTEND=noninteractive apt install -y openssh-server \
+    openssh-client \
+    update-motd \
+    sudo \
+    vim-tiny \
+    nano-tiny \
+    xauth
 
 # OpenSSH keys via secrets
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_ECDSA_KEY \
