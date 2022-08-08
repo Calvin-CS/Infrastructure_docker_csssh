@@ -101,7 +101,8 @@ RUN echo "ldap_access_filter = memberOf=CN=CS-Rights-Lab-All,OU=Groups,OU=Calvin
 
 # Setup of openSSH
 RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y openssh-server \
+    DEBIAN_FRONTEND=noninteractive apt install -y coreutils \
+    openssh-server \
     openssh-client \
     update-motd \
     sudo \
@@ -110,16 +111,19 @@ RUN apt update -y && \
     xauth
 
 # OpenSSH keys via secrets
+# NOTE: multiline is a pain, so actual keys that are multi-line are base64 encoded in the secret
+# (cat <key> | base64 -w 0 > <secret.env>).  Public keys should be single lines already, so they don't have
+# to be base64 encoded.  Decode the secret when dropping the key (cat <secret> | base64 -d > /etc/ssh/<key>)
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_ECDSA_KEY \
-    cp -f /run/secrets/CSSSH_SSH_HOST_ECDSA_KEY /etc/ssh/ssh_host_ecdsa_key
+    cat /run/secrets/CSSSH_SSH_HOST_ECDSA_KEY | /usr/bin/base64 -d > /etc/ssh/ssh_host_ecdsa_key
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_ECDSA_KEY_PUB \
     cp -f /run/secrets/CSSSH_SSH_HOST_ECDSA_KEY_PUB /etc/ssh/ssh_host_ecdsa_key.pub
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_ED25519_KEY \
-    cp -f /run/secrets/CSSSH_SSH_HOST_ED25519_KEY /etc/ssh/ssh_host_ed25519_key
+    cat /run/secrets/CSSSH_SSH_HOST_ED25519_KEY | /usr/bin/base64 -d > /etc/ssh/ssh_host_ed25519_key
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_ED25519_KEY_PUB \
     cp -f /run/secrets/CSSSH_SSH_HOST_ED25519_KEY_PUB /etc/ssh/ssh_host_ed25519_key.pub
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_RSA_KEY \
-    cp -f /run/secrets/CSSSH_SSH_HOST_RSA_KEY /etc/ssh/ssh_host_rsa_key
+    cat /run/secrets/CSSSH_SSH_HOST_RSA_KEY | /usr/bin/base64 -d > /etc/ssh/ssh_host_rsa_key
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_RSA_KEY_PUB \
     cp -f /run/secrets/CSSSH_SSH_HOST_RSA_KEY_PUB /etc/ssh/ssh_host_rsa_key.pub
 

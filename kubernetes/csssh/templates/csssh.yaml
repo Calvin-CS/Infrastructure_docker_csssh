@@ -8,7 +8,7 @@ metadata:
   annotations: 
     "builddate": "20220808-01"
 spec:
-  replicas: {{- if ne .Release.Namespace "production" }}1{{- else }}3{{- end}}
+  replicas: 1
   selector:
     matchLabels:
       app: csssh-{{ default "staging" .Release.Namespace }}
@@ -45,7 +45,7 @@ spec:
           server: aznfs-int.cs.calvin.edu
       - name: mount1
         nfs:
-          path: /export/webroot
+          path: /export/csweb
           server: aznfs-int.cs.calvin.edu
       - name: mount2
         nfs:
@@ -69,9 +69,14 @@ kind: Service
 metadata:
   name: csssh-{{ default "staging" .Release.Namespace }}
   namespace: {{ default "staging" .Release.Namespace }}
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: cs-ssh{{- if ne .Release.Namespace "production" }}-{{ default "staging" .Release.Namespace }}{{- end }}.{{ .Values.dns.name }}
 spec:
   type: LoadBalancer
   ports:
   - port: 22
+    targetPort: 22
+    name: ssh
+    protocol: TCP
   selector:
     app: csssh-{{ default "staging" .Release.Namespace }}

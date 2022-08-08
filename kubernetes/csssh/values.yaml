@@ -3,4 +3,4 @@ image:
   name: csssh
   tag: latest
 dns:
-  name: cs.calvin.edu
+  name: k8s.cs.calvin.edu
