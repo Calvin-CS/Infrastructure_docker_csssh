@@ -106,6 +106,8 @@ RUN apt update -y && \
     openssh-client \
     update-motd \
     sudo \
+    iputils-ping \
+    bind9-dnsutils \
     vim-tiny \
     nano-tiny \
     xauth && \
@@ -165,7 +167,5 @@ ENV TERM xterm-256color
 #RUN apt update -y && \
 #    DEBIAN_FRONTEND=noninteractive apt install -y netcat-openbsd \
 #    nmap \
-#    telnet \
-#    iputils-ping \
-#    bind9-dnsutils && \
+#    telnet && \
 #    rm -rf /var/lib/apt/lists/*
