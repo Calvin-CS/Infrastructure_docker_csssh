@@ -108,7 +108,8 @@ RUN apt update -y && \
     sudo \
     vim-tiny \
     nano-tiny \
-    xauth
+    xauth && \
+    rm -rf /var/lib/apt/lists/*
 
 # OpenSSH keys via secrets
 # NOTE: multiline is a pain, so actual keys that are multi-line are base64 encoded in the secret
@@ -136,12 +137,17 @@ RUN mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
 
 # Mount points
-RUN mkdir -p /home /webroot /opt/R /rprojects /opt/python /opt/anaconda && \
-    chown 0755 /home /webroot /opt/R /rprojects /opt/python /opt/anaconda
+# -- Note: /webroot is mounted with fixed permissions for root:cs-rights-web group
+RUN mkdir -p /home /webroot /opt/{R,python,anaconda} /rprojects && \
+    chmod 0755 /home /opt/R /rprojects /opt/python /opt/anaconda && \
+    chmod 2770 /webroot && \
+    chown root:362443 /webroot
 
 # MOTD update
-COPY inc/motd /etc/update-motd.d/05-cs-info
-RUN rm -f /etc/update-motd.d/50-motd-news /etc/update-motd.d/60-unminimize && \
+COPY --chmod=0755 inc/motd /etc/update-motd.d/05-cs-info
+RUN rm -f /etc/update-motd.d/10-help-text \
+    /etc/update-motd.d/50-motd-news \
+    /etc/update-motd.d/60-unminimize && \
     /usr/sbin/update-motd
 
 # Expose the service
