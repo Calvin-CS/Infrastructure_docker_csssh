@@ -161,10 +161,10 @@ ENV LC_ALL en_US.UTF-8
 ENV TERM xterm-256color
 
 # Debugging
-RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y netcat-openbsd \
-    nmap \
-    telnet \
-    iputils-ping \
-    bind9-dnsutils && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt update -y && \
+#    DEBIAN_FRONTEND=noninteractive apt install -y netcat-openbsd \
+#    nmap \
+#    telnet \
+#    iputils-ping \
+#    bind9-dnsutils && \
+#    rm -rf /var/lib/apt/lists/*
