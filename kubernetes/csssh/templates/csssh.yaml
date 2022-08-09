@@ -19,12 +19,10 @@ spec:
         {{ if ne .Release.Namespace "production" }}name: cs-ssh-{{ .Release.Namespace }}{{- else }}hostname: cs-ssh{{- end }}
     spec:
       {{ if ne .Release.Namespace "production" }}hostname: cs-ssh-{{ .Release.Namespace }}{{- else }}hostname: cs-ssh{{- end }} 
-      dnsPolicy: ClusterFirst
+      dnsPolicy: Default
       dnsConfig:
         searches:
           - cs.calvin.edu
-          - k8s.cs.calvin.edu
-          - calvin.edu
       containers:
       - name: csssh-{{ default "staging" .Release.Namespace }}
         image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ default "latest" .Values.image.tag }}
