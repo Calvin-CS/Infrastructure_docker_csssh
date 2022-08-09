@@ -77,6 +77,7 @@ metadata:
   namespace: {{ default "staging" .Release.Namespace }}
   annotations:
     external-dns.alpha.kubernetes.io/hostname: cs-ssh{{- if ne .Release.Namespace "production" }}-{{ default "staging" .Release.Namespace }}{{- end }}.{{ .Values.dns.name }}
+    service.beta.kubernetes.io/azure-dns-label-name: calvincs-cs-ssh{{- if ne .Release.Namespace "production" }}-{{ default "staging" .Release.Namespace }}{{- end }}
 spec:
   type: LoadBalancer
   ports:
