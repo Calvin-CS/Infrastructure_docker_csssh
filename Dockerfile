@@ -108,6 +108,7 @@ RUN apt update -y && \
     sudo \
     iputils-ping \
     iputils-tracepath \
+    iproute2 \
     bind9-dnsutils \
     netcat-openbsd \
     vim-tiny \
