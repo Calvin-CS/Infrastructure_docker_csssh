@@ -148,6 +148,7 @@ COPY --chmod=0755 inc/motd /etc/update-motd.d/05-cs-info
 RUN rm -f /etc/update-motd.d/10-help-text \
     /etc/update-motd.d/50-motd-news \
     /etc/update-motd.d/60-unminimize && \
+    echo "" > /etc/legal && \
     /usr/sbin/update-motd
 
 # Expose the service
