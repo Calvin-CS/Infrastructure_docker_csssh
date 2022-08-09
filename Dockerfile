@@ -107,7 +107,9 @@ RUN apt update -y && \
     update-motd \
     sudo \
     iputils-ping \
+    iputils-tracepath \
     bind9-dnsutils \
+    netcat-openbsd \
     vim-tiny \
     nano-tiny \
     xauth && \
