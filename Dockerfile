@@ -143,7 +143,6 @@ RUN mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
 
 # Mount points
-# -- Note: /webroot is mounted with fixed permissions for root:cs-rights-web group
 RUN mkdir -p /home /webroot /opt/{R,python,anaconda} /rprojects && \
     chmod 0755 /home /opt/R /rprojects /opt/python /opt/anaconda && \
     chmod 2770 /webroot && \

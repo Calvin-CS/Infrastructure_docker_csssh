@@ -31,8 +31,8 @@ spec:
         volumeMounts:
         - mountPath: /home
           name: mount0
-        - mountPath: /webroot
-          name: mount1
+        #- mountPath: /webroot
+        #name: mount1
         - mountPath: /rprojects
           name: mount2
         - mountPath: /opt/R
@@ -49,10 +49,10 @@ spec:
         nfs:
           path: /export/home
           server: aznfs-int.cs.calvin.edu
-      - name: mount1
-        nfs:
-          path: /export/csweb
-          server: aznfs-int.cs.calvin.edu
+      #- name: mount1
+      #  nfs:
+      #    path: /export/csweb
+      #    server: aznfs-int.cs.calvin.edu
       - name: mount2
         nfs:
           path: /export/rprojects
