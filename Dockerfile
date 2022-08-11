@@ -4,7 +4,7 @@ LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 # Set versions and platforms
 ARG S6_OVERLAY_VERSION=3.1.1.2
 ARG TZ=US/Michigan
-ARG BUILDDATE=20220809-01
+ARG BUILDDATE=20220810-1
 
 # Do all run commands with bash
 SHELL ["/bin/bash", "-c"] 
@@ -133,9 +133,6 @@ RUN --mount=type=secret,id=CSSSH_SSH_HOST_RSA_KEY \
     cat /run/secrets/CSSSH_SSH_HOST_RSA_KEY | /usr/bin/base64 -d > /etc/ssh/ssh_host_rsa_key
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_RSA_KEY_PUB \
     cp -f /run/secrets/CSSSH_SSH_HOST_RSA_KEY_PUB /etc/ssh/ssh_host_rsa_key.pub
-
-# sssd override bash to sh
-RUN sed -i 's@bash@sh@g' /etc/sssd/sssd.conf
 
 # SSH configuration
 COPY inc/sshd_config /etc/ssh/sshd_config
