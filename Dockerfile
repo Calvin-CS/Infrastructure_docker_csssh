@@ -134,6 +134,9 @@ RUN --mount=type=secret,id=CSSSH_SSH_HOST_RSA_KEY \
 RUN --mount=type=secret,id=CSSSH_SSH_HOST_RSA_KEY_PUB \
     cp -f /run/secrets/CSSSH_SSH_HOST_RSA_KEY_PUB /etc/ssh/ssh_host_rsa_key.pub
 
+# sssd override bash to sh
+RUN sed -i 's@bash@sh@g' /etc/sssd/sssd.conf
+
 # SSH configuration
 COPY inc/sshd_config /etc/ssh/sshd_config
 
