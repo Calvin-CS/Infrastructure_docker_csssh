@@ -107,6 +107,7 @@ RUN apt update -y && \
     openssh-client \
     update-motd \
     sudo \
+    git \
     iputils-ping \
     iputils-tracepath \
     iproute2 \
