@@ -56,7 +56,7 @@ spec:
       - name: mount2
         nfs:
           path: /export/rprojects
-          server: aznfs-int.cs.calvin.edu
+          server: r-int.cs.calvin.edu
       - name: mount3
         nfs:
           path: /export/r
