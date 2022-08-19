@@ -64,10 +64,8 @@ RUN mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
 
 # Mount points
-RUN mkdir -p /home /webroot /opt/{R,python,anaconda} /rprojects && \
-    chmod 0755 /home /opt/R /rprojects /opt/python /opt/anaconda && \
-    chmod 2770 /webroot && \
-    chown root:362443 /webroot
+RUN mkdir -p /home /opt/{R,python,anaconda} /rprojects && \
+    chmod 0755 /home /opt/R /opt/python /opt/anaconda /rprojects 
 
 # MOTD update
 COPY --chmod=0755 inc/motd /etc/update-motd.d/05-cs-info
