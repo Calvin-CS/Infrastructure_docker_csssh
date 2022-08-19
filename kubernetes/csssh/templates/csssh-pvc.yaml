@@ -22,7 +22,7 @@ spec:
     - acl
   nfs:
     path: /export/rprojects
-    server: r-int.cs.calvin.edu
+    server: aznfs-int.cs.calvin.edu
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
