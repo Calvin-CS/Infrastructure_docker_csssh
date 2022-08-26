@@ -148,5 +148,8 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@op
 Match address 153.106.0.0/16
   PasswordAuthentication yes
 
+Match address 10.0.0.0/16
+  PasswordAuthentication yes
+
 Match group CS-Rights-FacStf
   AllowTcpForwarding yes
