@@ -145,10 +145,16 @@ Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.
 KexAlgorithms ecdh-sha2-nistp384,curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
 
+# match calvin addresses
 Match address 153.106.0.0/16
   PasswordAuthentication yes
 
+# kubernetes raw internal clusterips
 Match address 10.0.0.0/16
+  PasswordAuthentication yes
+
+# kubernetes service ips
+Match address 10.230.224.0/22
   PasswordAuthentication yes
 
 Match group CS-Rights-FacStf
