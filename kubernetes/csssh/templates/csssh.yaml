@@ -5,8 +5,6 @@ metadata:
   namespace: {{ default "staging" .Release.Namespace }}
   labels:
     app: csssh-{{ default "staging" .Release.Namespace }}
-  annotations: 
-    "builddate": "20220808-01"
 spec:
   {{ if ne .Release.Namespace "production" }}replicas: 1{{- else }}replicas: 3{{- end }}
   selector:
@@ -14,6 +12,8 @@ spec:
       app: csssh-{{ default "staging" .Release.Namespace }}
   template:
     metadata:
+      annotations:
+        releaseTime: {{ dateInZone "2006-01-02 15:04:05Z" (now) "UTC"| quote }}
       labels:
         app: csssh-{{ default "staging" .Release.Namespace }}
         {{ if ne .Release.Namespace "production" }}name: cs-ssh-{{ .Release.Namespace }}{{- else }}hostname: cs-ssh{{- end }}
