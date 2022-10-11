@@ -12,20 +12,20 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
       - name: Docker Login
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ secrets.ACR_NAME }}
           username: ${{ secrets.ACR_LOGIN }}
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build and push staging images
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           tags: ${{secrets.ACR_NAME}}/csssh:latest
@@ -43,17 +43,20 @@ jobs:
     needs: build_push_image
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Helm
-        uses: Azure/setup-helm@v1
+        uses: Azure/setup-helm@v3
         with:
-          version: v3.9.0
-      - name: Get AKS Credentials
-        uses: Azure/aks-set-context@v1
+          version: latest
+      - name: Set AKS login information
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          resource-group: CS_Infrastructure_AKS
-          cluster-name: Infrastructure
+      - name: Set AKS context
+        uses: Azure/aks-set-context@v3
+        with:
+          resource-group: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
       - name: Run Helm Deploy
         run: |
           helm upgrade \
