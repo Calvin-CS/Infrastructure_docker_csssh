@@ -77,14 +77,14 @@ RUN rm -f /etc/update-motd.d/10-help-text \
     /usr/sbin/update-motd
 
 # stupid nodejs nonsense
-ADD https://deb.nodesource.com/gpgkey/nodesource.gpg.key /root
-RUN apt-key add /root/nodesource.gpg.key && \
-    rm -f /root/nodesource.gpg.key
-COPY inc/nodejs-focal-amd64.list /etc/apt/sources.list.d/
-RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
-RUN npm install -g @angular/cli    
+#ADD https://deb.nodesource.com/gpgkey/nodesource.gpg.key /root
+#RUN apt-key add /root/nodesource.gpg.key && \
+#    rm -f /root/nodesource.gpg.key
+#COPY inc/nodejs-focal-amd64.list /etc/apt/sources.list.d/
+#RUN apt update -y && \
+#    DEBIAN_FRONTEND=noninteractive apt install -y nodejs && \
+#    rm -rf /var/lib/apt/lists/*
+#RUN npm install -g @angular/cli    
 
 # Expose the service
 EXPOSE 22/tcp
