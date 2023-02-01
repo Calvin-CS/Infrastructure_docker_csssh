@@ -2,7 +2,7 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20230201-1
+ARG BUILDDATE=20230201-2
 ARG S6_OVERLAY_VERSION=3.1.1.2
 
 # Do all run commands with bash
@@ -75,6 +75,9 @@ RUN rm -f /etc/update-motd.d/10-help-text \
     /etc/update-motd.d/60-unminimize && \
     echo "" > /etc/legal && \
     /usr/sbin/update-motd
+
+# pam sshd
+COPY --chmod=0644 inc/pam_sshd /etc/pam.d/sshd
 
 # stupid nodejs nonsense
 #ADD https://deb.nodesource.com/gpgkey/nodesource.gpg.key /root

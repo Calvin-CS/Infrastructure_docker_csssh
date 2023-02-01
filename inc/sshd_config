@@ -79,6 +79,7 @@ ChallengeResponseAuthentication no
 #KerberosOrLocalPasswd yes
 #KerberosTicketCleanup yes
 #KerberosGetAFSToken no
+KerberosAuthentication no
 
 # GSSAPI options
 #GSSAPIAuthentication no
@@ -123,7 +124,7 @@ ClientAliveInterval 180
 ClientAliveCountMax 2
 #ShowPatchLevel no
 #UseDNS yes
-UseDNS yes
+UseDNS no
 #PidFile /var/run/sshd.pid
 #MaxStartups 10:30:100
 #MaxSessions 10
