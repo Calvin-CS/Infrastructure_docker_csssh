@@ -2,8 +2,8 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20230201-3
-ARG S6_OVERLAY_VERSION=3.1.1.2
+ARG BUILDDATE=20230202-1
+ARG S6_OVERLAY_VERSION=3.1.3.0
 
 # Do all run commands with bash
 SHELL ["/bin/bash", "-c"] 
@@ -78,16 +78,6 @@ RUN rm -f /etc/update-motd.d/10-help-text \
 
 # pam sshd
 COPY --chmod=0644 inc/pam_sshd /etc/pam.d/sshd
-
-# stupid nodejs nonsense
-#ADD https://deb.nodesource.com/gpgkey/nodesource.gpg.key /root
-#RUN apt-key add /root/nodesource.gpg.key && \
-#    rm -f /root/nodesource.gpg.key
-#COPY inc/nodejs-focal-amd64.list /etc/apt/sources.list.d/
-#RUN apt update -y && \
-#    DEBIAN_FRONTEND=noninteractive apt install -y nodejs && \
-#    rm -rf /var/lib/apt/lists/*
-#RUN npm install -g @angular/cli    
 
 # Expose the service
 EXPOSE 22/tcp
