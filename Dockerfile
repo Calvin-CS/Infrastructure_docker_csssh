@@ -17,15 +17,6 @@ COPY --chmod=0755 inc/cs-populate-users.sh /root
 # To disable, uncomment this line:
 RUN rm -f /etc/s6-overlay/s6-rc.d/user/content.d/populateusers
 
-# Install and configure rsyslog
-RUN apt update -y && \
-    DEBIAN_FRONTEND=noninteractive apt install -y rsyslog && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -f /etc/rsyslog.conf
-
-ADD https://raw.githubusercontent.com/Calvin-CS/Infrastructure_configs/main/rsyslog/rsyslog.conf /etc/
-RUN chmod 0644 /etc/rsyslog.conf
-
 # Access control
 RUN echo "ldap_access_filter = memberOf=CN=CS-Rights-Lab-All,OU=Groups,OU=CalvinCS,DC=ad,DC=calvin,DC=edu" >> /etc/sssd/sssd.conf
 
