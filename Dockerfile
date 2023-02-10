@@ -2,7 +2,7 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20230210-1
+ARG BUILDDATE=20230210-2
 ARG S6_OVERLAY_VERSION=3.1.3.0
 
 # Do all run commands with bash
@@ -78,10 +78,6 @@ RUN rm -f /etc/update-motd.d/10-help-text \
 
 # pam sshd
 COPY --chmod=0644 inc/pam_sshd /etc/pam.d/sshd
-
-# temp debugging of sssd
-#RUN sed -i 's/debug_level = 1/debug_level = 8/g' /etc/sssd/sssd.conf
-RUN sed -i 's/ldap_uri = .*/ldap_uri = ldaps:\/\/172\.16\.30\.1:636/g' /etc/sssd/sssd.conf
 
 # Expose the service
 EXPOSE 22/tcp
