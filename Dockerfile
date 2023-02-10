@@ -2,7 +2,7 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20230210-5
+ARG BUILDDATE=20230210-6
 ARG S6_OVERLAY_VERSION=3.1.3.0
 
 # Do all run commands with bash
@@ -11,11 +11,6 @@ ENTRYPOINT ["/init"]
 
 # copy new s6-overlay items for SSH/logging
 COPY s6-overlay/ /etc/s6-overlay
-
-# s6-populate users add script
-COPY --chmod=0755 inc/cs-populate-users.sh /root
-# To disable, uncomment this line:
-RUN rm -f /etc/s6-overlay/s6-rc.d/user/content.d/populateusers
 
 # Access control
 RUN echo "ldap_access_filter = memberOf=CN=CS-Rights-Lab-All,OU=Groups,OU=CalvinCS,DC=ad,DC=calvin,DC=edu" >> /etc/sssd/sssd.conf
