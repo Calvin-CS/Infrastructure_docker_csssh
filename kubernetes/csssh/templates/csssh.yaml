@@ -28,6 +28,13 @@ spec:
         image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ default "latest" .Values.image.tag }}
         ports:
         - containerPort: 22
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m" #0.1 CPU
+          limits:
+            memory: "300Mi"
+            cpu: "250m" #0.25 CPU
         volumeMounts:
         - mountPath: /home
           name: mount0
@@ -87,3 +94,31 @@ spec:
     protocol: TCP
   selector:
     app: csssh-{{ default "staging" .Release.Namespace }}
+---
+{{ if eq .Release.Namespace "production" }}
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: csssh-{{ default "staging" .Release.Namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: csssh-{{ default "staging" .Release.Namespace }}
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  #metrics:
+  #- type: Resource
+  #  resource:
+  #    name: cpu
+  #    target:
+  #      type: Utilization
+  #      averageUtilization: 80
+  #- type: Resource
+  #  resource:
+  #    name: memory
+  #    target:
+  #      type: Utilization
+  #      averageUtilization: 85
+{{- end }}
