@@ -105,9 +105,9 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: csssh-{{ default "staging" .Release.Namespace }}
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
+  minReplicas: 1
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 90
   #metrics:
   #- type: Resource
   #  resource:
