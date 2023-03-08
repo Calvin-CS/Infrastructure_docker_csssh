@@ -6,7 +6,7 @@ metadata:
   labels:
     app: csssh-{{ default "staging" .Release.Namespace }}
 spec:
-  {{ if ne .Release.Namespace "production" }}replicas: 1{{- else }}replicas: 2{{- end }}
+  replicas: 1
   selector:
     matchLabels:
       app: csssh-{{ default "staging" .Release.Namespace }}
@@ -31,9 +31,9 @@ spec:
         resources:
           requests:
             memory: "100Mi"
-            cpu: "100m" #0.1 CPU
+            cpu: "50m" #0.05 CPU
           limits:
-            memory: "300Mi"
+            memory: "400Mi"
             cpu: "250m" #0.25 CPU
         volumeMounts:
         - mountPath: /home
@@ -95,30 +95,30 @@ spec:
   selector:
     app: csssh-{{ default "staging" .Release.Namespace }}
 ---
-# {{ if eq .Release.Namespace "production" }}
-# apiVersion: autoscaling/v1
-# kind: HorizontalPodAutoscaler
-# metadata:
-#   name: csssh-{{ default "staging" .Release.Namespace }}
-# spec:
-#   scaleTargetRef:
-#     apiVersion: apps/v1
-#     kind: Deployment
-#     name: csssh-{{ default "staging" .Release.Namespace }}
-#   minReplicas: 1
-#   maxReplicas: 4
-#   targetCPUUtilizationPercentage: 90
-#   #metrics:
-#   #- type: Resource
-#   #  resource:
-#   #    name: cpu
-#   #    target:
-#   #      type: Utilization
-#   #      averageUtilization: 80
-#   #- type: Resource
-#   #  resource:
-#   #    name: memory
-#   #    target:
-#   #      type: Utilization
-#   #      averageUtilization: 85
-# {{- end }}
+{{ if eq .Release.Namespace "production" }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: csssh-{{ default "staging" .Release.Namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: csssh-{{ default "staging" .Release.Namespace }}
+  minReplicas: 1
+  maxReplicas: 4
+  #targetCPUUtilizationPercentage: 90
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 90
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 90
+{{- end }}
