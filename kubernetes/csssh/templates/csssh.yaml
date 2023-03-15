@@ -31,10 +31,10 @@ spec:
         resources:
           requests:
             memory: "100Mi"
-            cpu: "50m" #0.05 CPU
+            cpu: "350m" #0.35 CPU
           limits:
             memory: "400Mi"
-            cpu: "250m" #0.25 CPU
+            cpu: "1000m" #0.1 CPU
         volumeMounts:
         - mountPath: /home
           name: mount0
@@ -106,7 +106,7 @@ spec:
     kind: Deployment
     name: csssh-{{ default "staging" .Release.Namespace }}
   minReplicas: 1
-  maxReplicas: 4
+  maxReplicas: 2
   #targetCPUUtilizationPercentage: 90
   metrics:
   - type: Resource
