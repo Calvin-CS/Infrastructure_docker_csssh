@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-cssshnfs-aznfs-rprojects-{{ default "staging" .Release.Namespace }}
+  name: pv-cssshnfs-katzstunnel-rprojects-{{ default "staging" .Release.Namespace }}
 spec:
   capacity:
     storage: 49Gi
@@ -13,7 +13,7 @@ spec:
   mountOptions:
     - soft
     - relatime
-    - vers=3
+    - vers=4.2
     - namlen=255
     - proto=tcp
     - timeo=600
@@ -21,13 +21,13 @@ spec:
     - sec=sys
     - acl
   nfs:
-    path: /export/rprojects
-    server: aznfs-int.cs.calvin.edu
+    path: /rprojects
+    server: katzstunnel.cs.calvin.edu
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-cssshnfs-aznfs-rprojects-{{ default "staging" .Release.Namespace }}
+  name: pvc-cssshnfs-katzstunnel-rprojects-{{ default "staging" .Release.Namespace }}
 spec:
   storageClassName: nfs
   accessModes:

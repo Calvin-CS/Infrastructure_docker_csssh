@@ -55,27 +55,24 @@ spec:
       volumes:
       - name: mount0
         nfs:
-          path: /export/home
-          server: aznfs-int.cs.calvin.edu
+          path: /home
+          server: katzstunnel.cs.calvin.edu
       - name: mount2
-        persistentVolumeClaim:
-          claimName: pvc-cssshnfs-aznfs-rprojects-{{ default "staging" .Release.Namespace }}
+        nfs:
+          path: /rprojects
+          server: katzstunnel.cs.calvin.edu
       - name: mount3
         nfs:
           path: /export/r
-          server: aznfs-int.cs.calvin.edu
+          server: katzstunnel.cs.calvin.edu
       - name: mount4
         nfs:
           path: /export/python
-          server: aznfs-int.cs.calvin.edu
+          server: katzstunnel.cs.calvin.edu
       - name: mount5
         nfs:
           path: /export/anaconda
-          server: aznfs-int.cs.calvin.edu
-      - name: mount6
-        nfs:
-          path: /export/passwd
-          server: aznfs-int.cs.calvin.edu
+          server: katzstunnel.cs.calvin.edu
 ---
 apiVersion: v1
 kind: Service
