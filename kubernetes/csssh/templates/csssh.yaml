@@ -49,9 +49,6 @@ spec:
         - mountPath: /opt/anaconda
           name: mount5
           readOnly: true
-        - mountPath: /opt/passwd
-          name: mount6
-          readOnly: true
       volumes:
       - name: mount0
         nfs:
