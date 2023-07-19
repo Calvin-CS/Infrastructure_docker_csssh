@@ -39,37 +39,37 @@ spec:
         - mountPath: /home
           name: mount0
         - mountPath: /rprojects
-          name: mount2
+          name: mount1
         - mountPath: /opt/R
-          name: mount3
+          name: mount2
           readOnly: true
         - mountPath: /opt/python
-          name: mount4
+          name: mount3
           readOnly: true
         - mountPath: /opt/anaconda
-          name: mount5
+          name: mount4
           readOnly: true
       volumes:
       - name: mount0
         nfs:
           path: /home
           server: katzstunnel.cs.calvin.edu
-      - name: mount2
+      - name: mount1
         nfs:
           path: /rprojects
           server: katzstunnel.cs.calvin.edu
+      - name: mount2
+        nfs:
+          path: /r
+          server: r-int.cs.calvin.edu
       - name: mount3
         nfs:
-          path: /export/r
-          server: katzstunnel.cs.calvin.edu
+          path: /python
+          server: r-int.cs.calvin.edu
       - name: mount4
         nfs:
-          path: /export/python
-          server: katzstunnel.cs.calvin.edu
-      - name: mount5
-        nfs:
-          path: /export/anaconda
-          server: katzstunnel.cs.calvin.edu
+          path: /anaconda
+          server: r-int.cs.calvin.edu
 ---
 apiVersion: v1
 kind: Service
