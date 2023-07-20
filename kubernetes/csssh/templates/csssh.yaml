@@ -51,25 +51,20 @@ spec:
           readOnly: true
       volumes:
       - name: mount0
-        nfs:
-          path: /home
-          server: katzstunnel.cs.calvin.edu
+        persistentVolumeClaim:
+          claimName: pvc-nfs-katzstunnel-{{ default "staging" .Release.Namespace }}
       - name: mount1
-        nfs:
-          path: /rprojects
-          server: katzstunnel.cs.calvin.edu
+        persistentVolumeClaim:
+          claimName: pvc-nfs-katzstunnel-rprojects-{{ default "staging" .Release.Namespace }}
       - name: mount2
-        nfs:
-          path: /r
-          server: r-int.cs.calvin.edu
+        persistentVolumeClaim:
+          claimName: pvc-nfs-r-int-r-{{ default "staging" .Release.Namespace }}
       - name: mount3
-        nfs:
-          path: /python
-          server: r-int.cs.calvin.edu
+        persistentVolumeClaim:
+          claimName: pvc-nfs-r-int-python-{{ default "staging" .Release.Namespace }}
       - name: mount4
-        nfs:
-          path: /anaconda
-          server: r-int.cs.calvin.edu
+        persistentVolumeClaim:
+          claimName: pvc-nfs-r-int-anaconda-{{ default "staging" .Release.Namespace }}
 ---
 apiVersion: v1
 kind: Service
