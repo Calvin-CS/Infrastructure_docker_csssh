@@ -52,7 +52,7 @@ spec:
       volumes:
       - name: mount0
         persistentVolumeClaim:
-          claimName: pvc-nfs-katzstunnel-{{ default "staging" .Release.Namespace }}
+          claimName: pvc-nfs-katzstunnel-home-{{ default "staging" .Release.Namespace }}
       - name: mount1
         persistentVolumeClaim:
           claimName: pvc-nfs-katzstunnel-rprojects-{{ default "staging" .Release.Namespace }}
