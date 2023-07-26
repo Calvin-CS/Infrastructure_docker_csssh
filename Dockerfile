@@ -2,7 +2,7 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20230720-1
+ARG BUILDDATE=20230726-1
 ARG S6_OVERLAY_VERSION=3.1.3.0
 
 # Do all run commands with bash
@@ -60,8 +60,8 @@ RUN mkdir -p /run/sshd && \
     chmod 0755 /run/sshd
 
 # Mount points
-RUN mkdir -p /home /opt/{R,python,anaconda} /rprojects && \
-    chmod 0755 /home /opt/R /opt/python /opt/anaconda /rprojects 
+RUN mkdir -p /home /opt/{R,python,anaconda} && \
+    chmod 0755 /home /opt/R /opt/python /opt/anaconda 
 
 # MOTD update
 COPY --chmod=0755 inc/motd /etc/update-motd.d/05-cs-info

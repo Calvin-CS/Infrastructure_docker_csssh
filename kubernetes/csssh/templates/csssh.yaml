@@ -38,16 +38,14 @@ spec:
         volumeMounts:
         - mountPath: /home
           name: mount0
-        - mountPath: /rprojects
-          name: mount1
         - mountPath: /opt/R
-          name: mount2
+          name: mount1
           readOnly: true
         - mountPath: /opt/python
-          name: mount3
+          name: mount2
           readOnly: true
         - mountPath: /opt/anaconda
-          name: mount4
+          name: mount3
           readOnly: true
       volumes:
       - name: mount0
@@ -55,14 +53,11 @@ spec:
           claimName: pvc-nfs-katzstunnel-home-{{ default "staging" .Release.Namespace }}
       - name: mount1
         persistentVolumeClaim:
-          claimName: pvc-nfs-katzstunnel-rprojects-{{ default "staging" .Release.Namespace }}
+          claimName: pvc-nfs-r-int-r-{{ default "staging" .Release.Namespace }}
       - name: mount2
         persistentVolumeClaim:
-          claimName: pvc-nfs-r-int-r-{{ default "staging" .Release.Namespace }}
-      - name: mount3
-        persistentVolumeClaim:
           claimName: pvc-nfs-r-int-python-{{ default "staging" .Release.Namespace }}
-      - name: mount4
+      - name: mount3
         persistentVolumeClaim:
           claimName: pvc-nfs-r-int-anaconda-{{ default "staging" .Release.Namespace }}
 ---
