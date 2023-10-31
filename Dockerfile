@@ -2,7 +2,7 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20231019-1
+ARG BUILDDATE=20231031-1
 ARG S6_OVERLAY_VERSION=3.1.3.0
 
 # Do all run commands with bash
@@ -58,6 +58,14 @@ COPY inc/sshd_config /etc/ssh/sshd_config
 RUN mkdir -p /run/sshd && \
     chown root:root /run/sshd && \
     chmod 0755 /run/sshd
+
+# Add some perl modules for CS374 genHosts.pl support
+RUN apt update -y && \
+    DEBIAN_FRONTEND=noninteractive apt install -y \
+    libhttp-tiny-perl \
+    libjson-perl && \
+    rm -rf /var/lib/apt/lists/*
+
 
 # Add java
 RUN apt update -y && \

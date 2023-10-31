@@ -30,10 +30,10 @@ spec:
         - containerPort: 22
         resources:
           requests:
-            memory: "100Mi"
+            memory: "300Mi"
             cpu: "350m" #0.35 CPU
           limits:
-            memory: "400Mi"
+            memory: "800Mi"
             cpu: "1000m" #0.1 CPU
         volumeMounts:
         - mountPath: /home
