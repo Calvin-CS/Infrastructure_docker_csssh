@@ -2,8 +2,8 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20231108-1
-ARG S6_OVERLAY_VERSION=3.1.3.0
+ARG BUILDDATE=20231121-1
+ARG S6_OVERLAY_VERSION=3.1.6.2
 
 # Do all run commands with bash
 SHELL ["/bin/bash", "-c"] 
