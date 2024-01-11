@@ -2,7 +2,7 @@ FROM calvincs.azurecr.io/base-sssdunburden:latest
 LABEL maintainer="Chris Wieringa <cwieri39@calvin.edu>"
 
 # Set versions and platforms
-ARG BUILDDATE=20240102-1
+ARG BUILDDATE=20240111-1
 ARG S6_OVERLAY_VERSION=3.1.6.2
 
 # Do all run commands with bash
