@@ -28,13 +28,13 @@ spec:
         image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ default "latest" .Values.image.tag }}
         ports:
         - containerPort: 22
-        resources:
-          requests:
-            memory: "300Mi"
-            cpu: "350m" #0.35 CPU
-          limits:
-            memory: "800Mi"
-            cpu: "1000m" #0.1 CPU
+        # resources:
+        #   requests:
+        #     memory: "300Mi"
+        #     cpu: "350m" #0.35 CPU
+        #   limits:
+        #     memory: "800Mi"
+        #     cpu: "1000m" #0.1 CPU
         volumeMounts:
         - mountPath: /home
           name: mount0
@@ -99,10 +99,10 @@ spec:
       target:
         type: Utilization
         averageUtilization: 90
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 90
+  # - type: Resource
+  #   resource:
+  #     name: memory
+  #     target:
+  #       type: Utilization
+  #       averageUtilization: 90
 {{- end }}
