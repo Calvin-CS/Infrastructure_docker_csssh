@@ -18,6 +18,8 @@ spec:
         app: csssh-{{ default "staging" .Release.Namespace }}
         {{ if ne .Release.Namespace "production" }}name: cs-ssh-{{ .Release.Namespace }}{{- else }}hostname: cs-ssh{{- end }}
     spec:
+      nodeSelector:
+        CSInfrastructure: "true"
       {{ if ne .Release.Namespace "production" }}hostname: cs-ssh-{{ .Release.Namespace }}{{- else }}hostname: cs-ssh{{- end }} 
       dnsPolicy: Default
       dnsConfig:
